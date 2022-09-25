@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React from "react";
 import ShoppingList from "./ShoppingList";
 import Header from "./Header";
 import itemData from "../data/items";
+import { useState } from "react";
 
 function App() {
-  const [items, setItems] = useState(itemData);
+  const [items] = useState(itemData);
   const [isDarkMode, setIsDarkMode] = useState(false);
 
   function handleDarkModeClick() {
