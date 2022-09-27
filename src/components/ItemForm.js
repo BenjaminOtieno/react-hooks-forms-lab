@@ -4,44 +4,54 @@ import { useState } from "react";
 
 function ItemForm({ onItemFormSubmit }) {
   const [itemName, setItemName] = useState('')
-  const [itemFormCategory, setItemFormCategory] = useState("Produce")
-  const [newItem, setNewItem] = useState({
-    id: uuid(),
-    name: itemName,
-    category: itemFormCategory
-  })
+  const [itemCategory, setItemCategory] = useState('Produce')
 
-  function handleItemName(e) {
+  function handleItemNameChange(e) {
     setItemName(e.target.value)
-    setNewItem({ ...newItem, name: e.target.value })
   }
-  function handleItemFormCategory(e) {
-    setItemFormCategory(e.target.value)
-    setNewItem({...newItem, category: e.target.value})
+
+  function handleCategoryChange(e) {
+    setItemCategory(e.target.value)
+  }
+
+  function onItemSubmit(e) {
+    e.preventDefault()
+    const newItem = {
+      id: uuid(),
+      name: itemName,
+      category: itemCategory,
+    }
+    onItemFormSubmit(newItem)
   }
 
   return (
-    <form onSubmit={(e) => {
-      e.preventDefault()
-      onItemFormSubmit({ ...newItem, id: uuid() })
-    }} className="NewItem">
+    <form className='NewItem' onSubmit={onItemSubmit}>
       <label>
         Name:
-        <input onChange={handleItemName} value={itemName} type="text" name="name" />
+        <input
+          type='text'
+          name='name'
+          value={itemName}
+          onChange={handleItemNameChange}
+        />
       </label>
 
       <label>
         Category:
-        <select onChange={handleItemFormCategory} name="category">
-          <option value="Produce">Produce</option>
-          <option value="Dairy">Dairy</option>
-          <option value="Dessert">Dessert</option>
+        <select
+          name='category'
+          value={itemCategory}
+          onChange={handleCategoryChange}
+        >
+          <option value='Produce'>Produce</option>
+          <option value='Dairy'>Dairy</option>
+          <option value='Dessert'>Dessert</option>
         </select>
       </label>
 
-      <button type="submit">Add to List</button>
+      <button type='submit'>Add to List</button>
     </form>
-  );
+  )
 }
 
 export default ItemForm;
